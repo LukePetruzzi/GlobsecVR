@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
 
 	void Start () 
 	{
+        // Find the head
+        this.target = GameObject.Find("Camera(head)").transform;
+
 		//At the start, reset the height of the player
 		ResetScaling ();
 

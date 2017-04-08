@@ -53,7 +53,20 @@ public class IKControl : MonoBehaviour
 		}
 	}
 
-	void LateUpdate()
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        if (rightHandTarget == null || leftHandTarget == null || cameraTransform == null)
+        {
+            findAllComponents();
+        }
+    }
+
+    void LateUpdate()
 	{
 		//Apply some rotation functions to the hand to have it rotate properly to face the camera when it's close to it.
 		if (rightHand != null)
@@ -68,6 +81,14 @@ public class IKControl : MonoBehaviour
 			rightHand.transform.Rotate (0, Map.map (distanceValue, 0.25f, 0.45f, 0, -40), 0, Space.Self);
 		}
 	}
+
+    private void findAllComponents()
+    {
+        // find all the relevant components
+        this.rightHandTarget = GameObject.Find("rightHandTarget");
+        this.leftHandTarget = GameObject.Find("leftHandTarget");
+        this.cameraTransform = GameObject.Find("Camera(eye)").transform;
+    }
 }
 
 //Maps one range to another range. The most useful function ever made!

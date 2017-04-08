@@ -7,13 +7,17 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        // turn on everything the local player needs
 		if (isLocalPlayer)
         {
-            return;
+            this.gameObject.GetComponent<Animator>().enabled = true;
+            this.gameObject.GetComponent<IKControl>().enabled = true;
+            this.gameObject.GetComponent<PlayerController>().enabled = true;
+            this.gameObject.GetComponent<UpdateBodyPosition>().enabled = true;
         }
-        else
+        else // is NOT the local player... just leave
         {
-            this.transform.rotation = Quaternion.Euler(new Vector3(12, 12, 12));
+            return;
         }
 	}
 	
