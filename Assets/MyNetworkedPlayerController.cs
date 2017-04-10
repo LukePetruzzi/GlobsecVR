@@ -10,10 +10,10 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         // turn on everything the local player needs
 		if (isLocalPlayer)
         {
-            this.gameObject.GetComponent<Animator>().enabled = true;
-            this.gameObject.GetComponent<IKControl>().enabled = true;
-            this.gameObject.GetComponent<PlayerController>().enabled = true;
-            this.gameObject.GetComponent<UpdateBodyPosition>().enabled = true;
+            this.gameObject.GetComponentInChildren<Animator>().enabled = true;
+            this.gameObject.GetComponentInChildren<IKControl>().enabled = true;
+            this.gameObject.GetComponentInChildren<PlayerController>().enabled = true;
+            this.gameObject.GetComponentInChildren<UpdateBodyPosition>().enabled = true;
         }
         else // is NOT the local player... just leave
         {

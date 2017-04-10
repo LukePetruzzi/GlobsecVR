@@ -87,7 +87,7 @@ public class IKControl : MonoBehaviour
         // find all the relevant components
         this.rightHandTarget = GameObject.Find("rightHandTarget");
         this.leftHandTarget = GameObject.Find("leftHandTarget");
-        this.cameraTransform = GameObject.Find("Camera(eye)").transform;
+        this.cameraTransform = GameObject.Find("Camera (eye)").transform;
     }
 }
 

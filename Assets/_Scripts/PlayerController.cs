@@ -17,26 +17,32 @@ public class PlayerController : MonoBehaviour
 
 	void Start () 
 	{
-        // Find the head
-        this.target = GameObject.Find("Camera(head)").transform;
-
-		//At the start, reset the height of the player
-		ResetScaling ();
-
-		//Initialize the previousPosition variable
-		previousPosition = player.position;
-
-		//Start the character movement speed check routine
-		StartCoroutine (CheckCharacterLocation ());
+		
 	}
 
 	void Update ()
 	{
-		//Smoothly move the current speed towards the one we calculated
-		currentSpeed = Mathf.MoveTowards (currentSpeed, targetSpeed, Time.deltaTime*transitionSpeed);
+        if (this.target == null)
+        {
+            // Find the head
+            this.target = GameObject.Find("Camera (eye)").transform;
+            //At the start, reset the height of the player
+            ResetScaling();
 
-		//Set the animation speed of the walking to that value
-		animator.SetFloat ("WalkSpeed", currentSpeed);
+            //Initialize the previousPosition variable
+            previousPosition = player.position;
+
+            //Start the character movement speed check routine
+            StartCoroutine(CheckCharacterLocation());
+        }
+        else {
+            //Smoothly move the current speed towards the one we calculated
+            currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, Time.deltaTime * transitionSpeed);
+
+            //Set the animation speed of the walking to that value
+            animator.SetFloat("WalkSpeed", currentSpeed);
+        }
+
 	}
 
 	//Scale character to player height
