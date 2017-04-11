@@ -22,18 +22,26 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             getChildGameObject(this.gameObject, "Eyewear").GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             getChildGameObject(this.gameObject, "Hats").GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
+            // change name so it's obvious whos local in the inspector
+            gameObject.name = gameObject.name.Replace("(Clone)", "") + "_localPlayer";
+
         }
         else // is NOT the local player... just leave
         {
+
+            gameObject.name = gameObject.name.Replace("(Clone)", "") + "_clientPlayer";
+
             return;
         }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject bodyToTrack = getChildGameObject(this.gameObject, "PlayerBody");
-        this.transform.position = bodyToTrack.transform.position;
-        this.transform.rotation = bodyToTrack.transform.rotation;
+        
+        // this was for updating the position of the player's transform under... now using network transform child
+        //GameObject bodyToTrack = getChildGameObject(this.gameObject, "PlayerBody");
+        //this.transform.position = bodyToTrack.transform.position;
+        //this.transform.rotation = bodyToTrack.transform.rotation;
 	}
 
     static public GameObject getChildGameObject(GameObject fromGameObject, string withName)
