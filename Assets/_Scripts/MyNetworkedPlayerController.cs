@@ -5,12 +5,31 @@ using UnityEngine.Networking;
 
 public class MyNetworkedPlayerController : NetworkBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public override void OnStartLocalPlayer()
+    {
+        //Renderer[] rens = GetComponentsInChildren<Renderer>();
+        //foreach (Renderer ren in rens)
+        //{
+        //    ren.enabled = false;
+        //}
+
+        GetComponent<NetworkAnimator>().SetParameterAutoSend(0, true);
+    }
+
+    public override void PreStartClient()
+    {
+        GetComponent<NetworkAnimator>().SetParameterAutoSend(0, true);
+    }
+    // Use this for initialization
+    void Start () {
+
+        // enable the animator if client or server alike
+        this.gameObject.GetComponent<Animator>().enabled = true;
+        
+
         // turn on everything the local player needs
-		if (isLocalPlayer)
+        if (isLocalPlayer)
         {
-            this.gameObject.GetComponent<Animator>().enabled = true;
             this.gameObject.GetComponent<IKControl>().enabled = true;
             this.gameObject.GetComponent<PlayerController>().enabled = true;
             this.gameObject.GetComponent<UpdateBodyPosition>().enabled = true;
