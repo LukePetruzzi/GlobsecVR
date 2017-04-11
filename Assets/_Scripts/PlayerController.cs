@@ -26,8 +26,9 @@ public class PlayerController : MonoBehaviour
         {
             // Find the head
             this.target = GameObject.Find("Camera (eye)").transform;
+            this.player = target;
             //At the start, reset the height of the player
-            ResetScaling();
+            //ResetScaling();
 
             //Initialize the previousPosition variable
             previousPosition = player.position;

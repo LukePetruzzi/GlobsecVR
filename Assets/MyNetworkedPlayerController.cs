@@ -14,6 +14,14 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             this.gameObject.GetComponentInChildren<IKControl>().enabled = true;
             this.gameObject.GetComponentInChildren<PlayerController>().enabled = true;
             this.gameObject.GetComponentInChildren<UpdateBodyPosition>().enabled = true;
+
+            // turn off the head
+            getChildGameObject(this.gameObject, "Body").GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            getChildGameObject(this.gameObject, "default").GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            getChildGameObject(this.gameObject, "Eyelashes").GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            getChildGameObject(this.gameObject, "Eyewear").GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            getChildGameObject(this.gameObject, "Hats").GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+
         }
         else // is NOT the local player... just leave
         {
@@ -25,4 +33,14 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 	void Update () {
 		
 	}
+
+    static public GameObject getChildGameObject(GameObject fromGameObject, string withName)
+    {
+        //Author: Isaac Dart, June-13.
+        Transform[] ts = fromGameObject.transform.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in ts) if (t.gameObject.name == withName) return t.gameObject;
+        return null;
+    }
 }
+
+
