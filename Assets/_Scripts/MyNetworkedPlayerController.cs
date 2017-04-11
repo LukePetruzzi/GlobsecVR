@@ -31,7 +31,9 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        GameObject bodyToTrack = getChildGameObject(this.gameObject, "PlayerBody");
+        this.transform.position = bodyToTrack.transform.position;
+        this.transform.rotation = bodyToTrack.transform.rotation;
 	}
 
     static public GameObject getChildGameObject(GameObject fromGameObject, string withName)
