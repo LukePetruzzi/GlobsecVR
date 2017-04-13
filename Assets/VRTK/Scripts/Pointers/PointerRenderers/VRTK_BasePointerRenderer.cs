@@ -4,6 +4,7 @@ namespace VRTK
     using UnityEngine;
     using System;
     using System.Collections.Generic;
+    using VRTK;
 #if UNITY_5_5_OR_NEWER
     using UnityEngine.AI;
 #endif
@@ -203,6 +204,8 @@ namespace VRTK
             defaultMaterial = Resources.Load("WorldPointer") as Material;
             makeRendererVisible = new List<GameObject>();
             CreatePointerOriginTransformFollow();
+
+
             CreatePointerObjects();
         }
 
@@ -475,6 +478,10 @@ namespace VRTK
             pointerOriginTransformFollow = pointerOriginTransformFollowGameObject.AddComponent<VRTK_TransformFollow>();
             pointerOriginTransformFollow.enabled = false;
             pointerOriginTransformFollow.followsScale = false;
+
+            // CHANGED THIS SO IT FOLLOWS THE CONTROLLER BETTER
+            pointerOriginTransformFollow.moment = VRTK_TransformFollow.FollowMoment.OnUpdate;
+            
         }
 
         protected virtual float OverrideBeamLength(float currentLength)
