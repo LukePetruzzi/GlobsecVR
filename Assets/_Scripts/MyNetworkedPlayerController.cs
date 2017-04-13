@@ -57,10 +57,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-        // this was for updating the position of the player's transform under... now using network transform child
-        //GameObject bodyToTrack = getChildGameObject(this.gameObject, "PlayerBody");
-        //this.transform.position = bodyToTrack.transform.position;
-        //this.transform.rotation = bodyToTrack.transform.rotation;
+        
 	}
 
     static public GameObject getChildGameObject(GameObject fromGameObject, string withName)
