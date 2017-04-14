@@ -107,8 +107,8 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             this.headObjSource = GameObject.Find("Camera (eye)");
 
             // the controllers are actually finding the controller points on the hands I want for IK
-            this.leftContSource = GameObject.Find("leftHandTarget");
-            this.rightContSource = GameObject.Find("rightHandTarget");
+            this.leftContSource = GameObject.Find("Controller (left)");
+            this.rightContSource = GameObject.Find("Controller (right)");
         }
 
         //sync pos on network
@@ -123,20 +123,20 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         // head transform update
         if (headObjSource != null)
         {
-            vrHeadObj.transform.position = headObjSource.transform.position;
-            vrHeadObj.transform.rotation = headObjSource.transform.rotation;
+            vrHeadObj.transform.position = headObjSource.transform.localPosition;
+            vrHeadObj.transform.rotation = headObjSource.transform.localRotation;
         }
         // left controller transform update
         if (leftContSource != null)
         {
-            vrLeftCtrl.transform.position = leftContSource.transform.position;
-            vrLeftCtrl.transform.rotation = leftContSource.transform.rotation;
+            vrLeftCtrl.transform.position = leftContSource.transform.localPosition;
+            vrLeftCtrl.transform.rotation = leftContSource.transform.localRotation;
         }
         // right controller transform update
         if (rightContSource != null)
         {
-            vrRightCtrl.transform.position = rightContSource.transform.position;
-            vrRightCtrl.transform.rotation = rightContSource.transform.rotation;
+            vrRightCtrl.transform.position = rightContSource.transform.localPosition;
+            vrRightCtrl.transform.rotation = rightContSource.transform.localRotation;
         }
     }
 
