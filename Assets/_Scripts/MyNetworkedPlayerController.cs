@@ -72,7 +72,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 	}
 
     //Instantiate on start head and vr controller object so that it can be view by normal players
-    //[Command]
+    [Command]
     void CmdInstantiteHeadAndController()
     {
         // instantiate the objects using the prefabs created
