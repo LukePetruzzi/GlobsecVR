@@ -77,21 +77,33 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     {
         // instantiate the objects using the prefabs created
         vrHeadObj = (GameObject)Instantiate(vrHeadObjPrefab);
-        vrHeadObj.gameObject.transform.parent = this.gameObject.transform;
-        vrHeadObj.name = vrHeadObjPrefab.name;
+        
 
         vrLeftCtrl = (GameObject)Instantiate(vrLeftCtrlPrefab);
-        vrLeftCtrl.gameObject.transform.parent = this.gameObject.transform;
-        vrLeftCtrl.name = vrLeftCtrlPrefab.name;
+        
 
         vrRightCtrl = (GameObject)Instantiate(vrRightCtrlPrefab);
-        vrRightCtrl.gameObject.transform.parent = this.gameObject.transform;
-        vrRightCtrl.name = vrRightCtrlPrefab.name;
+        
 
         // spawn the objects for the clients
         NetworkServer.Spawn(vrHeadObj);
         NetworkServer.Spawn(vrLeftCtrl);
         NetworkServer.Spawn(vrRightCtrl);
+
+        RpcSyncOnSpawn();
+    }
+
+    [ClientRpc]
+    public void RpcSyncOnSpawn()
+    {
+        vrHeadObj.gameObject.transform.parent = this.gameObject.transform;
+        vrHeadObj.name = vrHeadObjPrefab.name;
+
+        vrLeftCtrl.gameObject.transform.parent = this.gameObject.transform;
+        vrLeftCtrl.name = vrLeftCtrlPrefab.name;
+
+        vrRightCtrl.gameObject.transform.parent = this.gameObject.transform;
+        vrRightCtrl.name = vrRightCtrlPrefab.name;
     }
 
     // Update is called once per frame
