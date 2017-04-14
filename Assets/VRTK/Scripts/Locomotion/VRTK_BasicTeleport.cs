@@ -114,6 +114,7 @@ namespace VRTK
             if (target)
             {
                 NavMeshHit hit;
+
                 validNavMeshLocation = NavMesh.SamplePosition(destinationPosition, out hit, navMeshLimitDistance, NavMesh.AllAreas);
             }
             if (navMeshLimitDistance == 0f)
@@ -161,6 +162,13 @@ namespace VRTK
 
         protected virtual void DoTeleport(object sender, DestinationMarkerEventArgs e)
         {
+            if (e.target.tag == "SceneTeleportDestination")
+            {
+                // Do all my custom stuff for teleporting to a new scene
+                this.teleportDestinationSelected();
+                return;
+            }
+
             if (enableTeleport && ValidLocation(e.target, e.destinationPosition) && e.enableTeleport)
             {
                 OnTeleporting(sender, e);
@@ -258,6 +266,12 @@ namespace VRTK
                     InitDestinationSetListener(destinationMarker.gameObject, state);
                 }
             }
+        }
+
+        // my custom functions for using this script ************************************************************************************************** 
+        private void teleportDestinationSelected()
+        {
+
         }
     }
 }
