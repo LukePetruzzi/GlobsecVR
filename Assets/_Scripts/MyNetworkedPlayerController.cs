@@ -129,6 +129,11 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             Debug.Log("THE HEAD OBJECT SOURCE IS NULL");
         }
 
+        
+        vrHeadObj = getChildGameObject(this.gameObject, "NetworkTrackedHead");
+        vrLeftCtrl = getChildGameObject(this.gameObject, "NetworkTrackedLeftController");
+        vrRightCtrl = getChildGameObject(this.gameObject, "NetworkTrackedRightController");
+
         // head transform update
         if (headObjSource != null)
         {
