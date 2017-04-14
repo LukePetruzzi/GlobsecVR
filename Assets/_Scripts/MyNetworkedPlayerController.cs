@@ -112,13 +112,13 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         }
 
         //sync pos on network
-        CmdControllerPositionSync();
+         ControllerPositionSync();
     }
 
 
     //sync position on VR controller objects so that VR player movemnts/action can be viewd by normal user
-    [Command]
-    public void CmdControllerPositionSync()
+    //[Command]
+    public void ControllerPositionSync()
     {
         // head transform update
         if (headObjSource != null)
