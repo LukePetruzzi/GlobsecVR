@@ -123,20 +123,20 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         // head transform update
         if (headObjSource != null)
         {
-            vrHeadObj.transform.position = headObjSource.transform.localPosition;
-            vrHeadObj.transform.rotation = headObjSource.transform.localRotation;
+            vrHeadObj.transform.position = headObjSource.transform.position;
+            vrHeadObj.transform.rotation = headObjSource.transform.rotation;
         }
         // left controller transform update
         if (leftContSource != null)
         {
-            vrLeftCtrl.transform.position = leftContSource.transform.localPosition;
-            vrLeftCtrl.transform.rotation = leftContSource.transform.localRotation;
+            vrLeftCtrl.transform.position = leftContSource.transform.position;
+            vrLeftCtrl.transform.rotation = leftContSource.transform.rotation;
         }
         // right controller transform update
         if (rightContSource != null)
         {
-            vrRightCtrl.transform.position = rightContSource.transform.localPosition;
-            vrRightCtrl.transform.rotation = rightContSource.transform.localRotation;
+            vrRightCtrl.transform.position = rightContSource.transform.position;
+            vrRightCtrl.transform.rotation = rightContSource.transform.rotation;
         }
     }
 
