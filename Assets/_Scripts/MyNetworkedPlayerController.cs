@@ -35,10 +35,6 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     // Use this for initialization
     void Start () {
 
-        // enable the animator if client or server alike
-        this.gameObject.GetComponent<Animator>().enabled = true;
-        this.gameObject.GetComponent<IKControl>().enabled = true;
-
         // turn on everything the local player needs
         if (isLocalPlayer)
         {
@@ -89,9 +85,10 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
 
         // spawn the objects for the clients
-        NetworkServer.Spawn(vrHeadObj);
-        NetworkServer.Spawn(vrLeftCtrl);
-        NetworkServer.Spawn(vrRightCtrl);
+        NetworkServer.SpawnWithClientAuthority(vrHeadObj, this.gameObject);
+        NetworkServer.SpawnWithClientAuthority(vrLeftCtrl, this.gameObject);
+        NetworkServer.SpawnWithClientAuthority(vrRightCtrl, this.gameObject);
+
     }
 
     // Update is called once per frame

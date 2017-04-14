@@ -15,4 +15,5 @@ public class MySpawnController : NetworkBehaviour {
         transform.SetParent(parentObject.transform);
         this.gameObject.name = this.gameObject.name.Substring(0, this.gameObject.name.LastIndexOf("(Clone)"));
     }
+
 }
