@@ -120,6 +120,15 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     //[Command]
     public void ControllerPositionSync()
     {
+        if (vrHeadObj == null)
+        {
+            Debug.Log("THE NETWORKED HEAD OBJECT IS NULL");
+        }
+        if (headObjSource == null)
+        {
+            Debug.Log("THE HEAD OBJECT SOURCE IS NULL");
+        }
+
         // head transform update
         if (headObjSource != null)
         {
