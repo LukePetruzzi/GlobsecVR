@@ -85,9 +85,9 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
 
         // spawn the objects for the clients
-        NetworkServer.SpawnWithClientAuthority(vrHeadObj, this.gameObject);
-        NetworkServer.SpawnWithClientAuthority(vrLeftCtrl, this.gameObject);
-        NetworkServer.SpawnWithClientAuthority(vrRightCtrl, this.gameObject);
+        NetworkServer.SpawnWithClientAuthority(vrHeadObj, this.connectionToClient);
+        NetworkServer.SpawnWithClientAuthority(vrLeftCtrl, this.connectionToClient);
+        NetworkServer.SpawnWithClientAuthority(vrRightCtrl, this.connectionToClient);
 
     }
 
