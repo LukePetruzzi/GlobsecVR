@@ -54,7 +54,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
 
             // Instantiate head and controllers
-            CmdInstantiteHeadAndController();
+            CmdInstantiteHeadAndController(this.gameObject);
 
 
 
@@ -73,16 +73,19 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
     //Instantiate on start head and vr controller object so that it can be view by normal players
     [Command]
-    void CmdInstantiteHeadAndController()
+    void CmdInstantiteHeadAndController(GameObject preCreationParent)
     {
         // instantiate the objects using the prefabs created
         vrHeadObj = (GameObject)Instantiate(vrHeadObjPrefab);
+        vrHeadObj.transform.parent = preCreationParent.transform;
         
 
         vrLeftCtrl = (GameObject)Instantiate(vrLeftCtrlPrefab);
+        vrLeftCtrl.transform.parent = preCreationParent.transform;
         
 
         vrRightCtrl = (GameObject)Instantiate(vrRightCtrlPrefab);
+        vrRightCtrl.transform.parent = preCreationParent.transform;
         
 
         // spawn the objects for the clients
@@ -90,20 +93,20 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         NetworkServer.Spawn(vrLeftCtrl);
         NetworkServer.Spawn(vrRightCtrl);
 
-        RpcSyncOnSpawn();
+        RpcSyncOnSpawn(vrHeadObj, vrLeftCtrl, vrRightCtrl, vrHeadObj.transform.parent.gameObject);
     }
 
     [ClientRpc]
-    public void RpcSyncOnSpawn()
+    public void RpcSyncOnSpawn(GameObject vrHead, GameObject vrLeft, GameObject vrRight, GameObject parentGameobject)
     {
-        vrHeadObj.gameObject.transform.parent = this.gameObject.transform;
-        vrHeadObj.name = vrHeadObjPrefab.name;
+        vrHead.gameObject.transform.parent = parentGameobject.transform;
+        vrHead.name = vrHeadObjPrefab.name;
 
-        vrLeftCtrl.gameObject.transform.parent = this.gameObject.transform;
-        vrLeftCtrl.name = vrLeftCtrlPrefab.name;
+        vrLeft.gameObject.transform.parent = parentGameobject.transform;
+        vrLeft.name = vrLeftCtrlPrefab.name;
 
-        vrRightCtrl.gameObject.transform.parent = this.gameObject.transform;
-        vrRightCtrl.name = vrRightCtrlPrefab.name;
+        vrRight.gameObject.transform.parent = parentGameobject.transform;
+        vrRight.name = vrRightCtrlPrefab.name;
     }
 
     // Update is called once per frame
