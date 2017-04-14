@@ -5,11 +5,12 @@ using UnityEngine.Networking;
 
 public class MyNetworkedPlayerController : NetworkBehaviour {
 
-    //source gameobjects head, left and right controller object of htc vive prefab
-
+    //source gameobjects head, left and right controller object
     public GameObject rightContSource;
     public GameObject leftContSource;
     public GameObject headObjSource;
+
+
 
 
     //prefabs to assign head, left controller, and right controller
@@ -54,7 +55,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
 
             // Instantiate head and controllers
-            CmdInstantiteHeadAndController(this.gameObject);
+            CmdInstantiteHeadAndController();
 
 
 
@@ -73,41 +74,41 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
     //Instantiate on start head and vr controller object so that it can be view by normal players
     [Command]
-    void CmdInstantiteHeadAndController(GameObject preCreationParent)
+    void CmdInstantiteHeadAndController()
     {
         // instantiate the objects using the prefabs created
         vrHeadObj = (GameObject)Instantiate(vrHeadObjPrefab);
-        vrHeadObj.transform.parent = preCreationParent.transform;
+        vrHeadObj.GetComponent<MySpawnController>().parentNetId = this.netId;
         
 
         vrLeftCtrl = (GameObject)Instantiate(vrLeftCtrlPrefab);
-        vrLeftCtrl.transform.parent = preCreationParent.transform;
-        
+        vrLeftCtrl.GetComponent<MySpawnController>().parentNetId = this.netId;
+
 
         vrRightCtrl = (GameObject)Instantiate(vrRightCtrlPrefab);
-        vrRightCtrl.transform.parent = preCreationParent.transform;
-        
+        vrRightCtrl.GetComponent<MySpawnController>().parentNetId = this.netId;
+
 
         // spawn the objects for the clients
         NetworkServer.Spawn(vrHeadObj);
         NetworkServer.Spawn(vrLeftCtrl);
         NetworkServer.Spawn(vrRightCtrl);
 
-        RpcSyncOnSpawn(vrHeadObj, vrLeftCtrl, vrRightCtrl, vrHeadObj.transform.parent.gameObject);
+        // RpcSyncOnSpawn();
     }
 
-    [ClientRpc]
-    public void RpcSyncOnSpawn(GameObject vrHead, GameObject vrLeft, GameObject vrRight, GameObject parentGameobject)
-    {
-        vrHead.gameObject.transform.parent = parentGameobject.transform;
-        vrHead.name = vrHeadObjPrefab.name;
+    //[ClientRpc]
+    //public void RpcSyncOnSpawn()
+    //{
+    //    vrHead.gameObject.transform.parent = parentGameobject.transform;
+    //    vrHead.name = vrHeadObjPrefab.name;
 
-        vrLeft.gameObject.transform.parent = parentGameobject.transform;
-        vrLeft.name = vrLeftCtrlPrefab.name;
+    //    vrLeft.gameObject.transform.parent = parentGameobject.transform;
+    //    vrLeft.name = vrLeftCtrlPrefab.name;
 
-        vrRight.gameObject.transform.parent = parentGameobject.transform;
-        vrRight.name = vrRightCtrlPrefab.name;
-    }
+    //    vrRight.gameObject.transform.parent = parentGameobject.transform;
+    //    vrRight.name = vrRightCtrlPrefab.name;
+    //}
 
     // Update is called once per frame
     void Update () {
