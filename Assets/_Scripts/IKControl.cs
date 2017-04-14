@@ -20,7 +20,7 @@ public class IKControl : MonoBehaviour
 			animator.SetIKPosition (AvatarIKGoal.RightHand, rightHandTarget.transform.position);
 
             animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-            animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.transform.parent.rotation); // set the rotation of the hand
+            animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.transform.rotation); // set the rotation of the hand
 		}
 		else
 		{
@@ -34,7 +34,7 @@ public class IKControl : MonoBehaviour
 			animator.SetIKPosition (AvatarIKGoal.LeftHand, leftHandTarget.transform.position);
 
             animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
-            animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandTarget.transform.parent.rotation);
+            animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandTarget.transform.rotation);
 		}
 		else
 		{
@@ -85,11 +85,20 @@ public class IKControl : MonoBehaviour
     private void findAllComponents()
     {
         // find all the relevant components
-        this.rightHandTarget = GameObject.Find("rightHandTarget");
-        this.leftHandTarget = GameObject.Find("leftHandTarget");
-        this.cameraTransform = GameObject.Find("Camera (eye)").transform;
+        this.cameraTransform = getChildGameObject(this.gameObject, "NetworkTrackedHead").transform;
+        this.leftHandTarget = getChildGameObject(this.gameObject, "NetworkTrackedLeftController");
+        this.rightHandTarget = getChildGameObject(this.gameObject, "NetworkTrackedRightController");
+    }
+
+    static public GameObject getChildGameObject(GameObject fromGameObject, string withName)
+    {
+        Transform[] ts = fromGameObject.transform.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in ts) if (t.gameObject.name == withName) return t.gameObject;
+        return null;
     }
 }
+
+
 
 //Maps one range to another range. The most useful function ever made!
 public class Map : MonoBehaviour

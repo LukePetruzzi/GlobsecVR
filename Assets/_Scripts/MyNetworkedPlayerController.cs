@@ -37,12 +37,11 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
         // enable the animator if client or server alike
         this.gameObject.GetComponent<Animator>().enabled = true;
-        
+        this.gameObject.GetComponent<IKControl>().enabled = true;
 
         // turn on everything the local player needs
         if (isLocalPlayer)
         {
-            this.gameObject.GetComponent<IKControl>().enabled = true;
             this.gameObject.GetComponent<PlayerController>().enabled = true;
             this.gameObject.GetComponent<UpdateBodyPosition>().enabled = true;
 
@@ -93,22 +92,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         NetworkServer.Spawn(vrHeadObj);
         NetworkServer.Spawn(vrLeftCtrl);
         NetworkServer.Spawn(vrRightCtrl);
-
-        // RpcSyncOnSpawn();
     }
-
-    //[ClientRpc]
-    //public void RpcSyncOnSpawn()
-    //{
-    //    vrHead.gameObject.transform.parent = parentGameobject.transform;
-    //    vrHead.name = vrHeadObjPrefab.name;
-
-    //    vrLeft.gameObject.transform.parent = parentGameobject.transform;
-    //    vrLeft.name = vrLeftCtrlPrefab.name;
-
-    //    vrRight.gameObject.transform.parent = parentGameobject.transform;
-    //    vrRight.name = vrRightCtrlPrefab.name;
-    //}
 
     // Update is called once per frame
     void Update () {
