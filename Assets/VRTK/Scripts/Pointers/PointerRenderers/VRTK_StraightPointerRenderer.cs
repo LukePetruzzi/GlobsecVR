@@ -64,6 +64,10 @@ namespace VRTK
         {
             actualContainer = new GameObject(string.Format("[{0}]StraightPointerRenderer_Container", gameObject.name));
             actualContainer.transform.localPosition = Vector3.zero;
+
+            // I added this so players can move between scenes with their pointers
+            DontDestroyOnLoad(actualContainer);
+
             VRTK_PlayerObject.SetPlayerObject(actualContainer, VRTK_PlayerObject.ObjectTypes.Pointer);
 
             CreateTracer();

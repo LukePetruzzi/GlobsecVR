@@ -38,6 +38,11 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         // turn on everything the local player needs
         if (isLocalPlayer)
         {
+            // move the camerarig to where the player spawned
+            GameObject rig = GameObject.Find("[CameraRig]");
+            rig.transform.position = this.gameObject.transform.position;
+            rig.transform.rotation = this.gameObject.transform.rotation;
+
             this.gameObject.GetComponent<PlayerController>().enabled = true;
             this.gameObject.GetComponent<UpdateBodyPosition>().enabled = true;
 

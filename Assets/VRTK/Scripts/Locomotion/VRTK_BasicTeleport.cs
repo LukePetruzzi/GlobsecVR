@@ -2,6 +2,8 @@
 namespace VRTK
 {
     using UnityEngine;
+    using UnityEngine.SceneManagement;
+    using UnityEngine.Networking;
     using System.Collections;
 #if UNITY_5_5_OR_NEWER
     using UnityEngine.AI;
@@ -271,7 +273,8 @@ namespace VRTK
         // my custom functions for using this script ************************************************************************************************** 
         private void teleportDestinationSelected()
         {
-
+            SceneManager.LoadScene("BunkerScene");
+            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("BunkerScene");
         }
     }
 }

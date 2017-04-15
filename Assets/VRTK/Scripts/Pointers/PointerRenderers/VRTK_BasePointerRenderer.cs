@@ -481,7 +481,8 @@ namespace VRTK
 
             // CHANGED THIS SO IT FOLLOWS THE CONTROLLER BETTER
             pointerOriginTransformFollow.moment = VRTK_TransformFollow.FollowMoment.OnUpdate;
-            
+            // ADDED THIS SO IT'S NOT DESTROYED
+            DontDestroyOnLoad(pointerOriginTransformFollowGameObject);
         }
 
         protected virtual float OverrideBeamLength(float currentLength)
