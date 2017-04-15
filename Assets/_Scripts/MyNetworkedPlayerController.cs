@@ -107,8 +107,8 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             this.headObjSource = GameObject.Find("Camera (eye)");
 
             // the controllers are actually finding the controller points on the hands I want for IK
-            this.leftContSource = GameObject.Find("Controller (left)");
-            this.rightContSource = GameObject.Find("Controller (right)");
+            this.leftContSource = GameObject.Find("leftHandTarget");
+            this.rightContSource = GameObject.Find("rightHandTarget");
         }
 
         //sync pos on network
@@ -129,10 +129,20 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             Debug.Log("THE HEAD OBJECT SOURCE IS NULL");
         }
 
-        
-        vrHeadObj = getChildGameObject(this.gameObject, "NetworkTrackedHead");
-        vrLeftCtrl = getChildGameObject(this.gameObject, "NetworkTrackedLeftController");
-        vrRightCtrl = getChildGameObject(this.gameObject, "NetworkTrackedRightController");
+        // THIS IS NECESSARY FOR THE CLIENTS. THEY DON'T HAVE THE REFERENCE TO THE OBJECT WHEN IT'S CREATED LIKE THE SERVER DOES. 
+        // THIS FIXES THE REFERENCE ONCE THE OBJECT HAS BEEN MOVED AS A CHILD
+        if (vrHeadObj == null)
+        {
+            vrHeadObj = getChildGameObject(this.gameObject, "NetworkTrackedHead");
+        }
+        if (vrLeftCtrl == null)
+        {
+            vrLeftCtrl = getChildGameObject(this.gameObject, "NetworkTrackedLeftController");
+        }
+        if (vrRightCtrl == null)
+        {
+            vrRightCtrl = getChildGameObject(this.gameObject, "NetworkTrackedRightController");
+        }
 
         // head transform update
         if (headObjSource != null)
