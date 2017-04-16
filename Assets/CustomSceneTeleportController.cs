@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using VRTK;
 
-public class CustomSceneTeleportController : MonoBehaviour {
+public class CustomSceneTeleportController : NetworkBehaviour {
 
     
     public VRTK_DestinationMarker pointer;
@@ -51,11 +51,30 @@ public class CustomSceneTeleportController : MonoBehaviour {
                 if (controllerEvents.triggerPressed)
                 {
                     //SceneManager.LoadScene("IBXScene");
-                    GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
+                    if (GameObject.Find("PlayerBody_localPlayer").GetComponent<NetworkIdentity>().isServer)
+                    {
+                        GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
+                    }
+                    else
+                    {
+                        CmdInvokeSceneChange();
+                    }
                 }
             }
         }
     }
+
+    [Command]
+    private void CmdInvokeSceneChange()
+    {
+        GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
+    }
+
+    //[ClientRpc]
+    //private void RpcNetworkedChangeScene()
+    //{
+    //    GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
+    //}
 
     void DisableCanvas(object sender, DestinationMarkerEventArgs e)
     {

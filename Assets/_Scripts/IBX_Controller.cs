@@ -29,7 +29,7 @@ public class IBX_Controller : NetworkBehaviour
 
         bluishColor = presentT2Light.GetComponentInChildren<Light>().color;
 
-        RpcTurnIBXOff();
+        CmdTurnIBXOff();
     }
 
 
@@ -38,8 +38,6 @@ public class IBX_Controller : NetworkBehaviour
     {
         // get all the lights
         getLights();
-
-        Debug.Log("SETTING UP!!");
     }
 
     private void Update()
@@ -65,36 +63,36 @@ public class IBX_Controller : NetworkBehaviour
             // IBX is off, turn the IBX on
             if (!readyLight.GetComponentInChildren<Light>().enabled)
             {
-                RpcTurnPowerOn();
+                CmdTurnPowerOn();
             }
             else // turn the IBX off (turn off all lights)
             {
-                RpcTurnIBXOff();
+                CmdTurnIBXOff();
             }
         }
         else if (e.currentTarget.name == "VoltageButton" && readyLight.GetComponentInChildren<Light>().enabled)
         {
-            RpcTurnVoltageOn();
+            CmdTurnVoltageOn();
         }
         else if (e.currentTarget.name == "CalibrateButton" && IBXisReady())
         {
-            RpcCalibrate();
+            CmdCalibrate();
         }
         else if (e.currentTarget.name == "InspectButton" && IBXisReady() && isCalibrated)
         {
-            RpcInspect();
+            CmdInspect();
         }
     }
 
-    [ClientRpc]
-    private void RpcTurnPowerOn()
+    [Command]
+    private void CmdTurnPowerOn()
     {
         readyLight.GetComponentInChildren<Light>().color = Color.yellow;
         readyLight.GetComponentInChildren<Light>().enabled = true;
     }
 
-    [ClientRpc]
-    private void RpcTurnVoltageOn()
+    [Command]
+    private void CmdTurnVoltageOn()
     {
         // set readylight to correct color
         readyLight.GetComponentInChildren<Light>().color = bluishColor;
@@ -109,8 +107,8 @@ public class IBX_Controller : NetworkBehaviour
             return false;
     }
 
-    [ClientRpc]
-    private void RpcTurnIBXOff()
+    [Command]
+    private void CmdTurnIBXOff()
     {
         readyLight.GetComponentInChildren<Light>().enabled = false;
         busyLight1.GetComponentInChildren<Light>().enabled = false;
@@ -127,8 +125,8 @@ public class IBX_Controller : NetworkBehaviour
         isCalibrated = false;
     }
 
-    [ClientRpc]
-    private void RpcCalibrate()
+    [Command]
+    private void CmdCalibrate()
     {
         StartCoroutine(Calibrate());
     }
@@ -148,8 +146,8 @@ public class IBX_Controller : NetworkBehaviour
         isCalibrated = true;
     }
 
-    [ClientRpc]
-    private void RpcInspect()
+    [Command]
+    private void CmdInspect()
     {
         StartCoroutine(Inspect());
     }
