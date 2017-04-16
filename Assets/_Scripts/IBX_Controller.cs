@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 using VRTK;
 
-public class IBX_Controller : MonoBehaviour
+public class IBX_Controller : NetworkBehaviour
 {
     GameObject readyLight, busyLight1, busyLight2, busyLight3, presentT1Light, presentT2Light, presentT3Light, noMatchLight, matchLight1, matchLight2, matchLight3;
     Color bluishColor;
@@ -28,7 +29,7 @@ public class IBX_Controller : MonoBehaviour
 
         bluishColor = presentT2Light.GetComponentInChildren<Light>().color;
 
-        turnIBXOff();
+        CmdTurnIBXOff();
     }
 
 
@@ -39,15 +40,24 @@ public class IBX_Controller : MonoBehaviour
         getLights();
 
         Debug.Log("SETTING UP!!");
-
-        // set up pointer and listeners
-        pointerL = GameObject.Find("LeftController").GetComponent<VRTK_UIPointer>();
-        pointerL.UIPointerElementEnter += ButtonClicked; // click button listener
-        pointerR = GameObject.Find("RightController").GetComponent<VRTK_UIPointer>();
-        pointerR.UIPointerElementEnter += ButtonClicked; // click button listener
     }
 
-    
+    private void Update()
+    {
+        if (GameObject.Find("LeftController") != null)
+        {
+            // set up pointer and listeners
+            pointerL = GameObject.Find("LeftController").GetComponent<VRTK_UIPointer>();
+            pointerL.UIPointerElementEnter += ButtonClicked; // click button listener
+        }
+        if (GameObject.Find("RightController") != null)
+        {
+            pointerR = GameObject.Find("RightController").GetComponent<VRTK_UIPointer>();
+            pointerR.UIPointerElementEnter += ButtonClicked; // click button listener
+        }
+    }
+
+
     private void ButtonClicked(object sender, UIPointerEventArgs e)
     {
         if (e.currentTarget.name == "PowerButton")
@@ -55,28 +65,40 @@ public class IBX_Controller : MonoBehaviour
             // IBX is off, turn the IBX on
             if (!readyLight.GetComponentInChildren<Light>().enabled)
             {
-                readyLight.GetComponentInChildren<Light>().color = Color.yellow;
-                readyLight.GetComponentInChildren<Light>().enabled = true;
+                CmdTurnPowerOn();
             }
             else // turn the IBX off (turn off all lights)
             {
-                turnIBXOff();
+                CmdTurnIBXOff();
             }
         }
         else if (e.currentTarget.name == "VoltageButton" && readyLight.GetComponentInChildren<Light>().enabled)
         {
-            // set readylight to correct color
-            readyLight.GetComponentInChildren<Light>().color = bluishColor;
-            readyLight.GetComponentInChildren<Light>().enabled = true;
+            CmdTurnVoltageOn();
         }
         else if (e.currentTarget.name == "CalibrateButton" && IBXisReady())
         {
-            StartCoroutine(Calibrate());
+            CmdCalibrate();
         }
         else if (e.currentTarget.name == "InspectButton" && IBXisReady() && isCalibrated)
         {
-            StartCoroutine(Inspect());
+            CmdInspect();
         }
+    }
+
+    [Command]
+    private void CmdTurnPowerOn()
+    {
+        readyLight.GetComponentInChildren<Light>().color = Color.yellow;
+        readyLight.GetComponentInChildren<Light>().enabled = true;
+    }
+
+    [Command]
+    private void CmdTurnVoltageOn()
+    {
+        // set readylight to correct color
+        readyLight.GetComponentInChildren<Light>().color = bluishColor;
+        readyLight.GetComponentInChildren<Light>().enabled = true;
     }
 
     private bool IBXisReady()
@@ -87,7 +109,8 @@ public class IBX_Controller : MonoBehaviour
             return false;
     }
 
-    private void turnIBXOff()
+    [Command]
+    private void CmdTurnIBXOff()
     {
         readyLight.GetComponentInChildren<Light>().enabled = false;
         busyLight1.GetComponentInChildren<Light>().enabled = false;
@@ -104,6 +127,12 @@ public class IBX_Controller : MonoBehaviour
         isCalibrated = false;
     }
 
+    [Command]
+    private void CmdCalibrate()
+    {
+        StartCoroutine(Calibrate());
+    }
+
     IEnumerator Calibrate()
     {
         // turn off other lights that may be on during this time
@@ -117,6 +146,12 @@ public class IBX_Controller : MonoBehaviour
         // now that it's calibrated, show we have the template stored and ready to go
         presentT2Light.GetComponentInChildren<Light>().enabled = true;
         isCalibrated = true;
+    }
+
+    [Command]
+    private void CmdInspect()
+    {
+        StartCoroutine(Inspect());
     }
 
     IEnumerator Inspect()

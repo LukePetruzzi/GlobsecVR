@@ -50,7 +50,7 @@ public class CustomSceneTeleportController : MonoBehaviour {
                 // user pull sthe trigger to teleport
                 if (controllerEvents.triggerPressed)
                 {
-                    SceneManager.LoadScene("IBXScene");
+                    //SceneManager.LoadScene("IBXScene");
                     GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
                 }
             }
