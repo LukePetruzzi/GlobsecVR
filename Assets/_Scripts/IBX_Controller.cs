@@ -29,7 +29,7 @@ public class IBX_Controller : NetworkBehaviour
 
         bluishColor = presentT2Light.GetComponentInChildren<Light>().color;
 
-        CmdTurnIBXOff();
+        RpcTurnIBXOff();
     }
 
 
@@ -65,36 +65,36 @@ public class IBX_Controller : NetworkBehaviour
             // IBX is off, turn the IBX on
             if (!readyLight.GetComponentInChildren<Light>().enabled)
             {
-                CmdTurnPowerOn();
+                RpcTurnPowerOn();
             }
             else // turn the IBX off (turn off all lights)
             {
-                CmdTurnIBXOff();
+                RpcTurnIBXOff();
             }
         }
         else if (e.currentTarget.name == "VoltageButton" && readyLight.GetComponentInChildren<Light>().enabled)
         {
-            CmdTurnVoltageOn();
+            RpcTurnVoltageOn();
         }
         else if (e.currentTarget.name == "CalibrateButton" && IBXisReady())
         {
-            CmdCalibrate();
+            RpcCalibrate();
         }
         else if (e.currentTarget.name == "InspectButton" && IBXisReady() && isCalibrated)
         {
-            CmdInspect();
+            RpcInspect();
         }
     }
 
-    [Command]
-    private void CmdTurnPowerOn()
+    [ClientRpc]
+    private void RpcTurnPowerOn()
     {
         readyLight.GetComponentInChildren<Light>().color = Color.yellow;
         readyLight.GetComponentInChildren<Light>().enabled = true;
     }
 
-    [Command]
-    private void CmdTurnVoltageOn()
+    [ClientRpc]
+    private void RpcTurnVoltageOn()
     {
         // set readylight to correct color
         readyLight.GetComponentInChildren<Light>().color = bluishColor;
@@ -109,8 +109,8 @@ public class IBX_Controller : NetworkBehaviour
             return false;
     }
 
-    [Command]
-    private void CmdTurnIBXOff()
+    [ClientRpc]
+    private void RpcTurnIBXOff()
     {
         readyLight.GetComponentInChildren<Light>().enabled = false;
         busyLight1.GetComponentInChildren<Light>().enabled = false;
@@ -127,8 +127,8 @@ public class IBX_Controller : NetworkBehaviour
         isCalibrated = false;
     }
 
-    [Command]
-    private void CmdCalibrate()
+    [ClientRpc]
+    private void RpcCalibrate()
     {
         StartCoroutine(Calibrate());
     }
@@ -148,8 +148,8 @@ public class IBX_Controller : NetworkBehaviour
         isCalibrated = true;
     }
 
-    [Command]
-    private void CmdInspect()
+    [ClientRpc]
+    private void RpcInspect()
     {
         StartCoroutine(Inspect());
     }
