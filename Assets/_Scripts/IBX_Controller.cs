@@ -47,6 +47,7 @@ public class IBX_Controller : MonoBehaviour
         pointerR.UIPointerElementEnter += ButtonClicked; // click button listener
     }
 
+    
     private void ButtonClicked(object sender, UIPointerEventArgs e)
     {
         if (e.currentTarget.name == "PowerButton")
