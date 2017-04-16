@@ -143,6 +143,8 @@ namespace VRTK
 
         public virtual void OnUIPointerElementEnter(UIPointerEventArgs e)
         {
+            Debug.Log("RECOGNIZING HITTING UI ELEMENT");
+
             if (e.currentTarget != currentTarget)
             {
                 ResetHoverTimer();

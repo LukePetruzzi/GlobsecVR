@@ -273,8 +273,10 @@ namespace VRTK
         // my custom functions for using this script ************************************************************************************************** 
         private void teleportDestinationSelected()
         {
-            SceneManager.LoadScene("BunkerScene");
-            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("BunkerScene");
+            //SceneManager.LoadScene("BunkerScene");
+            //GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("BunkerScene");
+            SceneManager.LoadScene("IBXScene");
+            GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
         }
     }
 }
