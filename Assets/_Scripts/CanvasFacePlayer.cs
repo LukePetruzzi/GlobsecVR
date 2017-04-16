@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class CanvasFacePlayer : MonoBehaviour {
 
-    public GameObject localPlayer;
-
-	// Use this for initialization
-	void Start () {
-        localPlayer = GameObject.Find("Camera (eye)");
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
         Vector3 camRotation = Camera.main.transform.rotation.eulerAngles;
 

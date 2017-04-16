@@ -165,8 +165,7 @@ namespace VRTK
             // MY CUSTOM TELEPORT THING
             if (e.target.gameObject.tag == "SceneTeleportDestination")
             {
-                SceneManager.LoadScene("IBXScene");
-                GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
+                return;
             }
 
             if (enableTeleport && ValidLocation(e.target, e.destinationPosition) && e.enableTeleport)
