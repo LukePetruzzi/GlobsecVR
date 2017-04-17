@@ -30,20 +30,15 @@ public class IBX_Controller : MonoBehaviour
         matchLight3 = GameObject.Find("MatchLight3").gameObject;
     }
 
-    private void Start()
-    {
-        getLights();
-    }
-
     private void Update()
     {
-        if (GameObject.Find("LeftController") != null)
+        if (pointerL == null && GameObject.Find("LeftController") != null)
         {
             // set up pointer and listeners
             pointerL = GameObject.Find("LeftController").GetComponent<VRTK_UIPointer>();
             pointerL.UIPointerElementEnter += ButtonClicked; // click button listener
         }
-        if (GameObject.Find("RightController") != null)
+        if (pointerR == null && GameObject.Find("RightController") != null)
         {
             pointerR = GameObject.Find("RightController").GetComponent<VRTK_UIPointer>();
             pointerR.UIPointerElementEnter += ButtonClicked; // click button listener
@@ -51,6 +46,7 @@ public class IBX_Controller : MonoBehaviour
         if (networkedController == null && GameObject.Find("PlayerBody_localPlayer") != null)
         {
             networkedController = GameObject.Find("PlayerBody_localPlayer").GetComponent<MyNetworkedPlayerController>();
+            getLights();
         }
     }
 
