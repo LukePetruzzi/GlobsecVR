@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class MyNetworkedPlayerController : NetworkBehaviour {
 
@@ -21,6 +22,9 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     GameObject vrHeadObj;
     GameObject vrLeftCtrl;
     GameObject vrRightCtrl;
+
+    // IBX controller to network those interactions
+    public IBX_Controller ibxController;
 
 
     public override void OnStartLocalPlayer()
@@ -116,6 +120,12 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             this.rightContSource = GameObject.Find("rightHandTarget");
         }
 
+        // find the IBX controller
+        if (ibxController == null && GameObject.Find("IBXCanvas") != null)
+        {
+            ibxController = GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>();
+        }
+
         //sync pos on network
          ControllerPositionSync();
     }
@@ -169,15 +179,18 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         }
     }
 
+    // SCENE CHANGING FUNCTIONS **************************************************************************************************************************************
     public void ChangeScene(string sceneName)
     {
         //SceneManager.LoadScene("IBXScene");
         if (isServer)
         {
+            SceneManager.LoadScene(sceneName);
             GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
         }
         else
         {
+            SceneManager.LoadScene(sceneName);
             CmdInvokeSceneChange(sceneName);
         }
     }
@@ -185,8 +198,82 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [Command]
     private void CmdInvokeSceneChange(string sceneName)
     {
+        SceneManager.LoadScene(sceneName);
         GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
     }
+
+    // IBX CONTROLLER FUNCTIONS **************************************************************************************************************************************
+
+    public void NetworkTurnPowerOn()
+    {
+        if (isServer)
+        {
+            // do it for the server
+            ibxController.TurnPowerOn();
+            // do it on all clients
+            RpcTurnPowerOn();
+        }
+        else
+        {
+            CmdTurnPowerOn();
+        }
+    }
+    [ClientRpc]
+    public void RpcTurnPowerOn()
+    {
+        ibxController.TurnPowerOn();
+    }
+    [Command]
+    public void CmdTurnPowerOn()
+    {
+        ibxController.TurnPowerOn();
+        RpcTurnPowerOn();
+    }
+
+    public void NetworkTurnVoltageOn()
+    {
+
+    }
+
+    public void NetworkTurnIBXOff()
+    {
+        if (isServer)
+        {
+            // do it for the server
+            ibxController.TurnIBXOff();
+            // do it on all clients
+            RpcTurnIBXOff();
+        }
+        else
+        {
+            CmdTurnIBXOff();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcTurnIBXOff()
+    {
+        ibxController.TurnIBXOff();
+    }
+    [Command]
+    public void CmdTurnIBXOff()
+    {
+        // do it for the server
+        ibxController.TurnIBXOff();
+        // do it for all clients
+        RpcTurnIBXOff();
+    }
+
+    public void NetworkCalibrate()
+    {
+
+    }
+
+    public void NetworkInspect()
+    {
+
+    }
+
 
     static public GameObject getChildGameObject(GameObject fromGameObject, string withName)
     {

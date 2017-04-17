@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Networking;
 using UnityEngine;
 using VRTK;
 
-public class IBX_Controller : NetworkBehaviour
+public class IBX_Controller : MonoBehaviour
 {
-    GameObject readyLight, busyLight1, busyLight2, busyLight3, presentT1Light, presentT2Light, presentT3Light, noMatchLight, matchLight1, matchLight2, matchLight3;
-    Color bluishColor;
+    public MyNetworkedPlayerController networkedController;
     VRTK_UIPointer pointerR;
     VRTK_UIPointer pointerL;
-    bool isCalibrated = false;
+
+    public GameObject readyLight, busyLight1, busyLight2, busyLight3, presentT1Light, presentT2Light, presentT3Light, matchLight1, matchLight2, matchLight3, noMatchLight;
+    public Color bluishColor;
+    
+    private bool isCalibrated = false;
 
     // get all the lights
     private void getLights()
@@ -26,17 +28,10 @@ public class IBX_Controller : NetworkBehaviour
         matchLight1 = GameObject.Find("MatchLight1").gameObject;
         matchLight2 = GameObject.Find("MatchLight2").gameObject;
         matchLight3 = GameObject.Find("MatchLight3").gameObject;
-
-        bluishColor = presentT2Light.GetComponentInChildren<Light>().color;
-
-        CmdTurnIBXOff();
     }
 
-
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
-        // get all the lights
         getLights();
     }
 
@@ -53,6 +48,10 @@ public class IBX_Controller : NetworkBehaviour
             pointerR = GameObject.Find("RightController").GetComponent<VRTK_UIPointer>();
             pointerR.UIPointerElementEnter += ButtonClicked; // click button listener
         }
+        if (networkedController == null && GameObject.Find("PlayerBody_localPlayer") != null)
+        {
+            networkedController = GameObject.Find("PlayerBody_localPlayer").GetComponent<MyNetworkedPlayerController>();
+        }
     }
 
 
@@ -60,39 +59,45 @@ public class IBX_Controller : NetworkBehaviour
     {
         if (e.currentTarget.name == "PowerButton")
         {
+            if (readyLight == null)
+            {
+                Debug.Log("HOUSTON...");
+            }
+            if (this.readyLight == null)
+            {
+                Debug.Log("THIS HOUSTON...");
+            }
             // IBX is off, turn the IBX on
             if (!readyLight.GetComponentInChildren<Light>().enabled)
             {
-                CmdTurnPowerOn();
+                networkedController.NetworkTurnPowerOn();
             }
             else // turn the IBX off (turn off all lights)
             {
-                CmdTurnIBXOff();
+                networkedController.NetworkTurnIBXOff();
             }
         }
         else if (e.currentTarget.name == "VoltageButton" && readyLight.GetComponentInChildren<Light>().enabled)
         {
-            CmdTurnVoltageOn();
+            networkedController.NetworkTurnVoltageOn();
         }
         else if (e.currentTarget.name == "CalibrateButton" && IBXisReady())
         {
-            CmdCalibrate();
+            networkedController.NetworkCalibrate();
         }
         else if (e.currentTarget.name == "InspectButton" && IBXisReady() && isCalibrated)
         {
-            CmdInspect();
+            networkedController.NetworkInspect();
         }
     }
 
-    [Command]
-    private void CmdTurnPowerOn()
+    public void TurnPowerOn()
     {
         readyLight.GetComponentInChildren<Light>().color = Color.yellow;
         readyLight.GetComponentInChildren<Light>().enabled = true;
     }
 
-    [Command]
-    private void CmdTurnVoltageOn()
+    public void TurnVoltageOn()
     {
         // set readylight to correct color
         readyLight.GetComponentInChildren<Light>().color = bluishColor;
@@ -107,8 +112,8 @@ public class IBX_Controller : NetworkBehaviour
             return false;
     }
 
-    [Command]
-    private void CmdTurnIBXOff()
+    
+    public void TurnIBXOff()
     {
         readyLight.GetComponentInChildren<Light>().enabled = false;
         busyLight1.GetComponentInChildren<Light>().enabled = false;
@@ -125,13 +130,7 @@ public class IBX_Controller : NetworkBehaviour
         isCalibrated = false;
     }
 
-    [Command]
-    private void CmdCalibrate()
-    {
-        StartCoroutine(Calibrate());
-    }
-
-    IEnumerator Calibrate()
+    public IEnumerator Calibrate()
     {
         // turn off other lights that may be on during this time
         noMatchLight.GetComponentInChildren<Light>().enabled = false;
@@ -146,13 +145,7 @@ public class IBX_Controller : NetworkBehaviour
         isCalibrated = true;
     }
 
-    [Command]
-    private void CmdInspect()
-    {
-        StartCoroutine(Inspect());
-    }
-
-    IEnumerator Inspect()
+    public IEnumerator Inspect()
     {
         noMatchLight.GetComponentInChildren<Light>().enabled = false;
         matchLight2.GetComponentInChildren<Light>().enabled = false;
