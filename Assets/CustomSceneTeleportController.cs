@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using VRTK;
 
-public class CustomSceneTeleportController : NetworkBehaviour {
+public class CustomSceneTeleportController : MonoBehaviour {
 
     
     public VRTK_DestinationMarker pointer;
     public VRTK_ControllerEvents controllerEvents;
-
-    public int canvasScalingFrames = 10;
+    public MyNetworkedPlayerController networkedController;
 
     private void OnEnable()
     {
@@ -28,12 +26,15 @@ public class CustomSceneTeleportController : NetworkBehaviour {
 
     // Use this for initialization
     void Start () { 
-     
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (networkedController == null)
+        {
+            networkedController = GameObject.Find("PlayerBody_localPlayer").GetComponent<MyNetworkedPlayerController>();
+        }
 	}
 
     void CheckSceneTeleport(object sender, DestinationMarkerEventArgs e)
@@ -50,25 +51,14 @@ public class CustomSceneTeleportController : NetworkBehaviour {
                 // user pull sthe trigger to teleport
                 if (controllerEvents.triggerPressed)
                 {
-                    //SceneManager.LoadScene("IBXScene");
-                    if (GameObject.Find("PlayerBody_localPlayer").GetComponent<NetworkIdentity>().isServer)
-                    {
-                        GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
-                    }
-                    else
-                    {
-                        CmdInvokeSceneChange();
-                    }
+                    // use the network controller to change the scene
+                    networkedController.ChangeScene("IBXScene");
                 }
             }
         }
     }
 
-    [Command]
-    private void CmdInvokeSceneChange()
-    {
-        GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
-    }
+
 
     //[ClientRpc]
     //private void RpcNetworkedChangeScene()
@@ -98,5 +88,12 @@ public class CustomSceneTeleportController : NetworkBehaviour {
         }
 
         t.localScale = FinalScale;
+    }
+
+    static public GameObject getChildGameObject(GameObject fromGameObject, string withName)
+    {
+        Transform[] ts = fromGameObject.transform.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in ts) if (t.gameObject.name == withName) return t.gameObject;
+        return null;
     }
 }
