@@ -31,7 +31,7 @@ public class CustomSceneTeleportController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (networkedController == null)
+        if (networkedController == null && GameObject.Find("PlayerBody_localPlayer") != null)
         {
             networkedController = GameObject.Find("PlayerBody_localPlayer").GetComponent<MyNetworkedPlayerController>();
         }
