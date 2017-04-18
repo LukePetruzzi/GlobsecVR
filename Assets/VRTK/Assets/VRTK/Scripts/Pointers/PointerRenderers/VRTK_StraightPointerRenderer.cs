@@ -172,7 +172,17 @@ namespace VRTK
                 PointerEnter(pointerCollidedWith);
 
                 destinationHit = pointerCollidedWith;
-                ChangeColor(validCollisionColor);
+
+                // I ADDED SO CAN ONLY TELEPORT TO TELEPORTABLE PLACES
+                if (pointerCollidedWith.collider.tag != "Teleportable")
+                {
+                    ChangeColor(invalidCollisionColor);
+                    return;
+                }
+                else
+                {
+                    ChangeColor(validCollisionColor);
+                }
             }
         }
 

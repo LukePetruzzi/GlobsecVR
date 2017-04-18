@@ -163,7 +163,7 @@ namespace VRTK
         protected virtual void DoTeleport(object sender, DestinationMarkerEventArgs e)
         {
             // MY CUSTOM TELEPORT THING
-            if (e.target.gameObject.tag == "SceneTeleportDestination")
+            if (e.target.gameObject.tag != "Teleportable")
             {
                 return;
             }
