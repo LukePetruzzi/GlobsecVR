@@ -222,18 +222,21 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         }
         else
         {
+            Debug.Log("Calling Command from Client");
             CmdTurnPowerOn();
         }
     }
     [ClientRpc]
     public void RpcTurnPowerOn()
     {
+        Debug.Log("RPC is running now");
         checkIBXController();
         ibxController.TurnPowerOn();
     }
     [Command]
     public void CmdTurnPowerOn()
     {
+        Debug.Log("Command Running on Server");
         ibxController.TurnPowerOn();
         RpcTurnPowerOn();
     }
