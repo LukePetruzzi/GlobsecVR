@@ -243,7 +243,6 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         }
         else
         {
-            Debug.Log("Calling Command from Client");
             ibxController.TurnPowerOn();
             CmdTurnPowerOn();
         }
@@ -251,14 +250,12 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [ClientRpc]
     public void RpcTurnPowerOn()
     {
-        Debug.Log("RPC is running now");
         checkIBXController();
         ibxController.TurnPowerOn();
     }
     [Command]
     public void CmdTurnPowerOn()
     {
-        Debug.Log("Command Running on Server");
         checkIBXController();
         ibxController.TurnPowerOn();
         RpcTurnPowerOn();
@@ -274,6 +271,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         }
         else
         {
+            ibxController.TurnVoltageOn();
             CmdTurnVoltageOn();
         }
     }
@@ -301,6 +299,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         }
         else
         {
+            ibxController.TurnIBXOff();
             CmdTurnIBXOff();
         }
     }
