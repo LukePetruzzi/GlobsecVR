@@ -22,13 +22,15 @@ public class IBX_Controller : MonoBehaviour
         {
         if (instance)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
         else
         {
             instance = this;
             //DontDestroyOnLoad(gameObject);
         }
+
+        Debug.Log("ID OF THE IBX Controller: " + this.GetInstanceID());
     }
 
     // get all the lights

@@ -123,6 +123,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         // find the IBX controller
         if (SceneManager.GetActiveScene().name == "IBXScene" && ibxController == null && GameObject.Find("IBXCanvas") != null)
         {
+            Debug.Log("ID OF THE NetworkedIBXController: " + GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>().GetInstanceID());
             ibxController = GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>();
         }
 
@@ -185,12 +186,12 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         //SceneManager.LoadScene("IBXScene");
         if (isServer)
         {
-            //SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName);
             GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
         }
         else
         {
-            //SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName);
             CmdInvokeSceneChange(sceneName);
         }
     }
@@ -198,7 +199,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [Command]
     private void CmdInvokeSceneChange(string sceneName)
     {
-        //SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName);
         GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
     }
 
