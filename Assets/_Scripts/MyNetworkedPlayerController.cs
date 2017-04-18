@@ -26,6 +26,29 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     // IBX controller to network those interactions
     public IBX_Controller ibxController;
 
+    //[SyncVar]
+    //public bool readyLightOn;
+    //[SyncVar]
+    //public bool busyLight1On;
+    //[SyncVar]
+    //public bool busyLight2On;
+    //[SyncVar]
+    //public bool busyLight3On;
+    //[SyncVar]
+    //public bool presentT1LightOn;
+    //[SyncVar]
+    //public bool presentT2LightOn;
+    //[SyncVar]
+    //public bool presentT3LightOn;
+    //[SyncVar]
+    //public bool matchLight1On;
+    //[SyncVar]
+    //public bool matchLight2On;
+    //[SyncVar]
+    //public bool matchLight3On;
+    //[SyncVar]
+    //public bool noMatchLightOn;
+
 
     public override void OnStartLocalPlayer()
     {
@@ -60,8 +83,6 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
             // Instantiate head and controllers
             CmdInstantiteHeadAndController();
-
-
 
             // change name so it's obvious whos local in the inspector
             gameObject.name = gameObject.name.Replace("(Clone)", "") + "_localPlayer";
@@ -223,6 +244,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         else
         {
             Debug.Log("Calling Command from Client");
+            ibxController.TurnPowerOn();
             CmdTurnPowerOn();
         }
     }
@@ -237,6 +259,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     public void CmdTurnPowerOn()
     {
         Debug.Log("Command Running on Server");
+        checkIBXController();
         ibxController.TurnPowerOn();
         RpcTurnPowerOn();
     }
@@ -263,6 +286,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [Command]
     public void CmdTurnVoltageOn()
     {
+        checkIBXController();
         ibxController.TurnVoltageOn();
         RpcTurnVoltageOn();
     }
@@ -289,6 +313,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [Command]
     public void CmdTurnIBXOff()
     {
+        checkIBXController();
         ibxController.TurnIBXOff();
         RpcTurnIBXOff();
     }
@@ -307,6 +332,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     {
         if (ibxController == null)
         {
+            Debug.Log("ID OF THE NetworkedIBXController: " + GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>().GetInstanceID());
             ibxController = GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>();
         }
     }
