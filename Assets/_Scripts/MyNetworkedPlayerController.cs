@@ -121,7 +121,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         }
 
         // find the IBX controller
-        if (ibxController == null && GameObject.Find("IBXCanvas") != null)
+        if (SceneManager.GetActiveScene().name == "IBXScene" && ibxController == null && GameObject.Find("IBXCanvas") != null)
         {
             ibxController = GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>();
         }
@@ -232,16 +232,33 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
     public void NetworkTurnVoltageOn()
     {
-
+        if (isServer)
+        {
+            ibxController.TurnVoltageOn();
+            RpcTurnVoltageOn();
+        }
+        else
+        {
+            CmdTurnVoltageOn();
+        }
+    }
+    [ClientRpc]
+    public void RpcTurnVoltageOn()
+    {
+        ibxController.TurnVoltageOn();
+    }
+    [Command]
+    public void CmdTurnVoltageOn()
+    {
+        ibxController.TurnVoltageOn();
+        RpcTurnVoltageOn();
     }
 
     public void NetworkTurnIBXOff()
     {
         if (isServer)
         {
-            // do it for the server
             ibxController.TurnIBXOff();
-            // do it on all clients
             RpcTurnIBXOff();
         }
         else
@@ -249,7 +266,6 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             CmdTurnIBXOff();
         }
     }
-
     [ClientRpc]
     public void RpcTurnIBXOff()
     {
@@ -258,9 +274,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [Command]
     public void CmdTurnIBXOff()
     {
-        // do it for the server
         ibxController.TurnIBXOff();
-        // do it for all clients
         RpcTurnIBXOff();
     }
 
