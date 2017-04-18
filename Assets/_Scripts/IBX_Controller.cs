@@ -14,6 +14,23 @@ public class IBX_Controller : MonoBehaviour
     
     private bool isCalibrated = false;
 
+
+    static IBX_Controller instance;
+ 
+    // EVENTS
+    private void Awake()
+        {
+        if (instance)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+    }
+
     // get all the lights
     private void getLights()
     {
