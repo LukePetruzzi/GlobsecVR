@@ -185,12 +185,12 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         //SceneManager.LoadScene("IBXScene");
         if (isServer)
         {
-            SceneManager.LoadScene(sceneName);
+            //SceneManager.LoadScene(sceneName);
             GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
         }
         else
         {
-            SceneManager.LoadScene(sceneName);
+            //SceneManager.LoadScene(sceneName);
             CmdInvokeSceneChange(sceneName);
         }
     }
@@ -198,7 +198,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [Command]
     private void CmdInvokeSceneChange(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
         GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
     }
 
