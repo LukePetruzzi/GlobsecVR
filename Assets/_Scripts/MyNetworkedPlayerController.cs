@@ -319,12 +319,58 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
 
     public void NetworkCalibrate()
     {
-
+        checkIBXController();
+        if (isServer)
+        {
+            StartCoroutine(ibxController.Calibrate());
+            RpcCalibrate();
+        }
+        else
+        {
+            StartCoroutine(ibxController.Calibrate());
+            CmdCalibrate();
+        }
+    }
+    [ClientRpc]
+    public void RpcCalibrate()
+    {
+        checkIBXController();
+        StartCoroutine(ibxController.Calibrate());
+    }
+    [Command]
+    public void CmdCalibrate()
+    {
+        checkIBXController();
+        StartCoroutine(ibxController.Calibrate());
+        RpcCalibrate();
     }
 
     public void NetworkInspect()
     {
-
+        checkIBXController();
+        if (isServer)
+        {
+            StartCoroutine(ibxController.Inspect());
+            RpcInspect();
+        }
+        else
+        {
+            StartCoroutine(ibxController.Inspect());
+            CmdInspect();
+        }
+    }
+    [ClientRpc]
+    public void RpcInspect()
+    {
+        checkIBXController();
+        StartCoroutine(ibxController.Inspect());
+    }
+    [Command]
+    public void CmdInspect()
+    {
+        checkIBXController();
+        StartCoroutine(ibxController.Inspect());
+        RpcInspect();
     }
 
     private void checkIBXController()
