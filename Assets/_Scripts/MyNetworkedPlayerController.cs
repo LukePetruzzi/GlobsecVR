@@ -202,6 +202,11 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
         GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
     }
 
+    //private IEnumerator WaitToLoad()
+    //{
+    //    yield return new WaitForSeconds(3);
+    //}
+
     // IBX CONTROLLER FUNCTIONS **************************************************************************************************************************************
 
     public void NetworkTurnPowerOn()
