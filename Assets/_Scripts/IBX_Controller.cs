@@ -6,6 +6,7 @@ using VRTK;
 public class IBX_Controller : MonoBehaviour
 {
     public MyNetworkedPlayerController networkedController;
+    public VRTK_ControllerEvents controllerEventsL, controllerEventsR;
     VRTK_UIPointer pointerR;
     VRTK_UIPointer pointerL;
 
@@ -55,16 +56,22 @@ public class IBX_Controller : MonoBehaviour
         {
             // set up pointer and listeners
             pointerL = GameObject.Find("LeftController").GetComponent<VRTK_UIPointer>();
-            pointerL.UIPointerElementEnter += ButtonClicked; // click button listener
+            pointerL.UIPointerElementClick += ButtonClicked; // click button listener
         }
         if (pointerR == null && GameObject.Find("RightController") != null)
         {
             pointerR = GameObject.Find("RightController").GetComponent<VRTK_UIPointer>();
-            pointerR.UIPointerElementEnter += ButtonClicked; // click button listener
+            pointerR.UIPointerElementClick += ButtonClicked; // click button listener
         }
         if (networkedController == null && GameObject.Find("PlayerBody_localPlayer") != null)
         {
             networkedController = GameObject.Find("PlayerBody_localPlayer").GetComponent<MyNetworkedPlayerController>();
+
+            // find the left and right controllers
+            controllerEventsL = GameObject.Find("LeftController").GetComponent<VRTK_ControllerEvents>();
+            controllerEventsR = GameObject.Find("RightController").GetComponent<VRTK_ControllerEvents>();
+
+            // get the lights
             getLights();
         }
     }
@@ -72,6 +79,7 @@ public class IBX_Controller : MonoBehaviour
 
     private void ButtonClicked(object sender, UIPointerEventArgs e)
     {
+
         if (e.currentTarget.name == "PowerButton")
         {
             if (readyLight == null)
@@ -104,6 +112,7 @@ public class IBX_Controller : MonoBehaviour
         {
             networkedController.NetworkInspect();
         }
+        
     }
 
     public void TurnPowerOn()
