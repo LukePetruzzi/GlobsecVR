@@ -55,6 +55,33 @@ public class CustomSceneTeleportController : MonoBehaviour {
                     networkedController.ChangeScene("Bunker_C");
                 }
             }
+            if (e.target.gameObject.name == "BuildingB")
+            {
+                // user pull sthe trigger to teleport
+                if (controllerEvents.triggerPressed)
+                {
+                    // use the network controller to change the scene
+                    networkedController.ChangeScene("Bunker_B");
+                }
+            }
+            if (e.target.gameObject.name == "BuildingA")
+            {
+                // user pull sthe trigger to teleport
+                if (controllerEvents.triggerPressed)
+                {
+                    // use the network controller to change the scene
+                    networkedController.ChangeScene("Bunker_A");
+                }
+            }
+            if (e.target.gameObject.name == "DoorToMainRoom")
+            {
+                // user pull sthe trigger to teleport
+                if (controllerEvents.triggerPressed)
+                {
+                    // use the network controller to change the scene
+                    networkedController.ChangeScene("MainScene");
+                }
+            }
             if (e.target.gameObject.name == "WeaponToInspect")
             {
                 if (controllerEvents.triggerPressed)

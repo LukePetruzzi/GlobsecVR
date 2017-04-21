@@ -26,28 +26,6 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     // IBX controller to network those interactions
     public IBX_Controller ibxController;
 
-    //[SyncVar]
-    //public bool readyLightOn;
-    //[SyncVar]
-    //public bool busyLight1On;
-    //[SyncVar]
-    //public bool busyLight2On;
-    //[SyncVar]
-    //public bool busyLight3On;
-    //[SyncVar]
-    //public bool presentT1LightOn;
-    //[SyncVar]
-    //public bool presentT2LightOn;
-    //[SyncVar]
-    //public bool presentT3LightOn;
-    //[SyncVar]
-    //public bool matchLight1On;
-    //[SyncVar]
-    //public bool matchLight2On;
-    //[SyncVar]
-    //public bool matchLight3On;
-    //[SyncVar]
-    //public bool noMatchLightOn;
 
 
     public override void OnStartLocalPlayer()
