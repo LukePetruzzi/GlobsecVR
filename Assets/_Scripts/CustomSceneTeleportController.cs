@@ -84,6 +84,8 @@ public class CustomSceneTeleportController : MonoBehaviour {
             }
             if (e.target.gameObject.name == "WeaponToInspect")
             {
+                // remove reference so ibx works
+                // networkedController.ibxController = null;
                 if (controllerEvents.triggerPressed)
                 {
                     // use the network controller to change the scene

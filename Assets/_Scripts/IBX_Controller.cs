@@ -28,10 +28,17 @@ public class IBX_Controller : MonoBehaviour
         else
         {
             instance = this;
+            
             //DontDestroyOnLoad(gameObject);
         }
 
         Debug.Log("ID OF THE IBX Controller: " + this.GetInstanceID());
+    }
+
+    private void Start()
+    {
+        // get the lights
+        getLights();
     }
 
     // get all the lights
@@ -71,8 +78,7 @@ public class IBX_Controller : MonoBehaviour
             controllerEventsL = GameObject.Find("LeftController").GetComponent<VRTK_ControllerEvents>();
             controllerEventsR = GameObject.Find("RightController").GetComponent<VRTK_ControllerEvents>();
 
-            // get the lights
-            getLights();
+            
         }
     }
 
@@ -84,6 +90,7 @@ public class IBX_Controller : MonoBehaviour
         {
             if (readyLight == null)
             {
+                getLights();
                 Debug.Log("HOUSTON...");
             }
             if (this.readyLight == null)
