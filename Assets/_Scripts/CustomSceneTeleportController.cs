@@ -79,7 +79,7 @@ public class CustomSceneTeleportController : MonoBehaviour {
                 if (controllerEvents.triggerPressed)
                 {
                     // use the network controller to change the scene
-                    networkedController.ChangeScene("MainScene");
+                    networkedController.ChangeScene("MainSceneReturn");
                 }
             }
             if (e.target.gameObject.name == "WeaponToInspect")
