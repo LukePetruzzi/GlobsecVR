@@ -78,16 +78,36 @@ public class CustomSceneTeleportController : MonoBehaviour {
                 // user pull sthe trigger to teleport
                 if (controllerEvents.triggerPressed)
                 {
+                    if (GameObject.Find("IBX") != null)
+                    {
+                        // turn off the meshes
+                        foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
+                        {
+                            rend.enabled = false;
+                        }
+                    }
+
                     // use the network controller to change the scene
                     networkedController.ChangeScene("MainSceneReturn");
                 }
             }
             if (e.target.gameObject.name == "WeaponToInspect")
             {
-                // remove reference so ibx works
-                // networkedController.ibxController = null;
                 if (controllerEvents.triggerPressed)
                 {
+                    if (GameObject.Find("IBX") != null)
+                    {
+                        // turn on the meshes
+                        foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
+                        {
+                            rend.enabled = true;
+                        }
+
+                        // turn the power off for the next scene
+                        networkedController.NetworkTurnIBXOff();
+                        Debug.Log("TURNED OFF IBX POWER");
+                    }
+
                     // use the network controller to change the scene
                     networkedController.ChangeScene("IBXScene");
                 }

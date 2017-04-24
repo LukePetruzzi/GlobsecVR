@@ -37,6 +37,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     {
         GetComponent<NetworkAnimator>().SetParameterAutoSend(0, true);
     }
+
     // Use this for initialization
     void Start () {
 

@@ -17,22 +17,23 @@ public class IBX_Controller : MonoBehaviour
 
 
     static IBX_Controller instance;
- 
+
     // EVENTS
     private void Awake()
-        {
-        if (instance)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            instance = this;
-            
-            //DontDestroyOnLoad(gameObject);
-        }
+    {
+        //if (instance)
+        //{
+        //    Destroy(this.gameObject);
+        //    Debug.Log("Destryed new instance");
+        //}
+        //else
+        //{
+        //    instance = this;
+        //    Debug.Log("Saved original instance");
+        //    //DontDestroyOnLoad(gameObject);
+        //}
 
-        Debug.Log("ID OF THE IBX Controller: " + this.GetInstanceID());
+        Debug.Log("ID OF THE New IBX Controller: " + this.GetInstanceID());
     }
 
     private void Start()
@@ -77,8 +78,6 @@ public class IBX_Controller : MonoBehaviour
             // find the left and right controllers
             controllerEventsL = GameObject.Find("LeftController").GetComponent<VRTK_ControllerEvents>();
             controllerEventsR = GameObject.Find("RightController").GetComponent<VRTK_ControllerEvents>();
-
-            
         }
     }
 
@@ -90,7 +89,7 @@ public class IBX_Controller : MonoBehaviour
         {
             if (readyLight == null)
             {
-                getLights();
+                //getLights();
                 Debug.Log("HOUSTON...");
             }
             if (this.readyLight == null)
