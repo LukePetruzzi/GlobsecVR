@@ -15,7 +15,7 @@ public class CustomSceneTeleportController : MonoBehaviour {
     {
         pointer.DestinationMarkerEnter += CheckSceneTeleport;
         pointer.DestinationMarkerExit += DisableCanvas;
-        SceneManager.activeSceneChanged += WaitForControllerInput;
+        //SceneManager.sceneLoaded += WaitForControllerInput;
     }
 
     private void OnDisable()
@@ -38,13 +38,15 @@ public class CustomSceneTeleportController : MonoBehaviour {
         }
 	}
 
-    void WaitForControllerInput(Scene s, Scene y)
+    void WaitForControllerInput(Scene s, LoadSceneMode y)
     {
         StartCoroutine(Wait());
     }
     IEnumerator Wait()
     {
+        pointer.enabled = false;
         yield return new WaitForSeconds(2);
+        pointer.enabled = true;
     }
 
     void CheckSceneTeleport(object sender, DestinationMarkerEventArgs e)
