@@ -15,6 +15,7 @@ public class CustomSceneTeleportController : MonoBehaviour {
     {
         pointer.DestinationMarkerEnter += CheckSceneTeleport;
         pointer.DestinationMarkerExit += DisableCanvas;
+        SceneManager.activeSceneChanged += WaitForControllerInput;
     }
 
     private void OnDisable()
@@ -36,6 +37,15 @@ public class CustomSceneTeleportController : MonoBehaviour {
             networkedController = GameObject.Find("PlayerBody_localPlayer").GetComponent<MyNetworkedPlayerController>();
         }
 	}
+
+    void WaitForControllerInput(Scene s, Scene y)
+    {
+        StartCoroutine(Wait());
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2);
+    }
 
     void CheckSceneTeleport(object sender, DestinationMarkerEventArgs e)
     {
