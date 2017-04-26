@@ -190,6 +190,10 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
             {
                 rend.enabled = false;
             }
+            foreach (Collider coll in GameObject.Find("IBX").GetComponentsInChildren<Collider>())
+            {
+                coll.enabled = false;
+            }
         }
 
         if (isServer)

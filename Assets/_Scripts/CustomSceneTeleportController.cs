@@ -119,6 +119,10 @@ public class CustomSceneTeleportController : MonoBehaviour {
                         {
                             rend.enabled = true;
                         }
+                        foreach (Collider coll in GameObject.Find("IBX").GetComponentsInChildren<Collider>())
+                        {
+                            coll.enabled = true;
+                        }
 
                         // turn the power off for the next scene
                         networkedController.NetworkTurnIBXOff();
