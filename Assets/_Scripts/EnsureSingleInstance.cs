@@ -12,12 +12,12 @@ public class EnsureSingleInstance : MonoBehaviour {
         if (instance)
         {
             Destroy(this.gameObject);
-            Debug.Log("Destryed new instance");
+           // Debug.Log("Destryed new instance");
         }
         else
         {
             instance = this;
-            Debug.Log("Saved original instance");
+           // Debug.Log("Saved original instance");
             //DontDestroyOnLoad(gameObject);
         }
     }

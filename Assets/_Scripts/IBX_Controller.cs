@@ -18,23 +18,6 @@ public class IBX_Controller : MonoBehaviour
 
     static IBX_Controller instance;
 
-    // EVENTS
-    private void Awake()
-    {
-        //if (instance)
-        //{
-        //    Destroy(this.gameObject);
-        //    Debug.Log("Destryed new instance");
-        //}
-        //else
-        //{
-        //    instance = this;
-        //    Debug.Log("Saved original instance");
-        //    //DontDestroyOnLoad(gameObject);
-        //}
-
-        Debug.Log("ID OF THE New IBX Controller: " + this.GetInstanceID());
-    }
 
     private void Start()
     {
@@ -190,7 +173,7 @@ public class IBX_Controller : MonoBehaviour
             int mask = (1 << LayerMask.NameToLayer("Shield"));
 
             // cast the ray out 2 meters
-            if (Physics.Raycast(this.transform.position, -this.transform.forward, out hit, 2f, mask))
+            if (Physics.Raycast(this.transform.position, -this.transform.right, out hit, 2f, mask))
             {
                 // check that the tag on the 
                 if (hit.transform.CompareTag("isMatchWarhead"))
@@ -206,7 +189,8 @@ public class IBX_Controller : MonoBehaviour
             {
                 noMatchLight.GetComponentInChildren<Light>().enabled = true;
             }
-            Debug.DrawRay(this.transform.position, this.transform.forward * 2f, Color.red, 1f);
+
+            Debug.DrawRay(this.transform.position, -this.transform.right * 2f, Color.red, 1f);
 
             // turn off the busy light
             busyLight3.GetComponentInChildren<Light>().enabled = false;

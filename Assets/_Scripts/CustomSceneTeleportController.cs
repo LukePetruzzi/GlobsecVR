@@ -61,52 +61,57 @@ public class CustomSceneTeleportController : MonoBehaviour {
             if (e.target.gameObject.name == "BuildingC")
             {
                 // user pull sthe trigger to teleport
-                if (controllerEvents.triggerPressed)
+                if (controllerEvents.triggerClicked)
                 {
+                    pointer.enabled = false;
                     // use the network controller to change the scene
                     networkedController.ChangeScene("Bunker_C");
+                    pointer.enabled = true;
                 }
             }
             if (e.target.gameObject.name == "BuildingB")
             {
                 // user pull sthe trigger to teleport
-                if (controllerEvents.triggerPressed)
+                if (controllerEvents.triggerClicked)
                 {
+                    pointer.enabled = false;
                     // use the network controller to change the scene
                     networkedController.ChangeScene("Bunker_B");
+                    pointer.enabled = true;
                 }
             }
             if (e.target.gameObject.name == "BuildingA")
             {
                 // user pull sthe trigger to teleport
-                if (controllerEvents.triggerPressed)
+                if (controllerEvents.triggerClicked)
                 {
+                    pointer.enabled = false;
                     // use the network controller to change the scene
                     networkedController.ChangeScene("Bunker_A");
+                    pointer.enabled = true;
                 }
             }
             if (e.target.gameObject.name == "DoorToMainRoom")
             {
                 // user pull sthe trigger to teleport
-                if (controllerEvents.triggerPressed)
+                if (controllerEvents.triggerClicked)
                 {
-                    if (GameObject.Find("IBX") != null)
-                    {
-                        // turn off the meshes
-                        foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
-                        {
-                            rend.enabled = false;
-                        }
-                    }
-
+                    pointer.enabled = false;
                     // use the network controller to change the scene
                     networkedController.ChangeScene("MainSceneReturn");
+                    pointer.enabled = true;
                 }
             }
             if (e.target.gameObject.name == "WeaponToInspect")
             {
-                if (controllerEvents.triggerPressed)
+                if (controllerEvents.triggerClicked)
                 {
+                    pointer.enabled = false;
+                    // use the network controller to change the scene
+                    networkedController.ChangeScene("IBXScene");
+                    pointer.enabled = true;
+
+                    // turn on the ibx meshes 
                     if (GameObject.Find("IBX") != null)
                     {
                         // turn on the meshes
@@ -117,23 +122,12 @@ public class CustomSceneTeleportController : MonoBehaviour {
 
                         // turn the power off for the next scene
                         networkedController.NetworkTurnIBXOff();
-                        Debug.Log("TURNED OFF IBX POWER");
+                        //Debug.Log("TURNED OFF IBX POWER");
                     }
-
-                    // use the network controller to change the scene
-                    networkedController.ChangeScene("IBXScene");
                 }
             }
         }
     }
-
-
-
-    //[ClientRpc]
-    //private void RpcNetworkedChangeScene()
-    //{
-    //    GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene("IBXScene");
-    //}
 
     void DisableCanvas(object sender, DestinationMarkerEventArgs e)
     {

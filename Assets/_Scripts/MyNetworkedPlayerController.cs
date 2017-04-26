@@ -183,7 +183,15 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     // SCENE CHANGING FUNCTIONS **************************************************************************************************************************************
     public void ChangeScene(string sceneName)
     {
-        //SceneManager.LoadScene("IBXScene");
+        if (sceneName != "IBXScene" && GameObject.Find("IBX") != null)
+        {
+            // turn off the meshes
+            foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
+            {
+                rend.enabled = false;
+            }
+        }
+
         if (isServer)
         {
             SceneManager.LoadScene(sceneName);
@@ -352,7 +360,7 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     {
         if (ibxController == null)
         {
-            Debug.Log("ID OF THE NetworkedIBXController: " + GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>().GetInstanceID());
+           // Debug.Log("ID OF THE NetworkedIBXController: " + GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>().GetInstanceID());
             ibxController = GameObject.Find("IBXCanvas").GetComponent<IBX_Controller>();
         }
     }
