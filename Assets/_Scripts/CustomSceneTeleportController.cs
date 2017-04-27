@@ -58,39 +58,56 @@ public class CustomSceneTeleportController : MonoBehaviour {
             Transform t = e.target.gameObject.GetComponentInChildren<Canvas>().transform;
             StartCoroutine(LerpScale(t, t.localScale, Vector3.one));
 
-            if (e.target.gameObject.name == "BuildingC")
+            if (e.target.gameObject.name == "BuildingA" || e.target.gameObject.name == "BuildingB" || e.target.gameObject.name == "BuildingC")
             {
                 // user pull sthe trigger to teleport
                 if (controllerEvents.triggerClicked)
                 {
                     pointer.enabled = false;
-                    // use the network controller to change the scene
-                    networkedController.ChangeScene("Bunker_C");
+
+                    // choose a scene at random out of the 3 bunkers and go to it.
+                    System.Random rnd = new System.Random();
+                    // generate random number. 1 inclusive 4 exclusive
+                    int bunk = rnd.Next(1, 4);
+
+                    if (bunk == 1)
+                    {
+                        networkedController.ChangeScene("Bunker_A");
+                    }
+                    else if (bunk == 2)
+                    {
+                        networkedController.ChangeScene("Bunker_B");
+                    }
+                    else if (bunk == 3)
+                    {
+                        networkedController.ChangeScene("Bunker_C");
+                    }
                     pointer.enabled = true;
                 }
             }
-            if (e.target.gameObject.name == "BuildingB")
-            {
-                // user pull sthe trigger to teleport
-                if (controllerEvents.triggerClicked)
-                {
-                    pointer.enabled = false;
-                    // use the network controller to change the scene
-                    networkedController.ChangeScene("Bunker_B");
-                    pointer.enabled = true;
-                }
-            }
-            if (e.target.gameObject.name == "BuildingA")
-            {
-                // user pull sthe trigger to teleport
-                if (controllerEvents.triggerClicked)
-                {
-                    pointer.enabled = false;
-                    // use the network controller to change the scene
-                    networkedController.ChangeScene("Bunker_A");
-                    pointer.enabled = true;
-                }
-            }
+            //if (e.target.gameObject.name == "BuildingB")
+            //{
+            //    // user pull sthe trigger to teleport
+            //    if (controllerEvents.triggerClicked)
+            //    {
+            //        pointer.enabled = false;
+            //        // use the network controller to change the scene
+            //        networkedController.ChangeScene("Bunker_B");
+            //        pointer.enabled = true;
+            //    }
+            //}
+            //if (e.target.gameObject.name == "BuildingA")
+            //{
+            //    // user pull sthe trigger to teleport
+            //    if (controllerEvents.triggerClicked)
+            //    {
+            //        pointer.enabled = false;
+            //        // use the network controller to change the scene
+            //        networkedController.ChangeScene("Bunker_A");
+            //        pointer.enabled = true;
+            //    }
+            //}
+
             if (e.target.gameObject.name == "DoorToMainRoom")
             {
                 // user pull sthe trigger to teleport
