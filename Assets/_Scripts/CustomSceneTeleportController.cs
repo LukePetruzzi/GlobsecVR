@@ -110,24 +110,6 @@ public class CustomSceneTeleportController : MonoBehaviour {
                     // use the network controller to change the scene
                     networkedController.ChangeScene("IBXScene");
                     pointer.enabled = true;
-
-                    // turn on the ibx meshes 
-                    if (GameObject.Find("IBX") != null)
-                    {
-                        // turn on the meshes
-                        foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
-                        {
-                            rend.enabled = true;
-                        }
-                        foreach (Collider coll in GameObject.Find("IBX").GetComponentsInChildren<Collider>())
-                        {
-                            coll.enabled = true;
-                        }
-
-                        // turn the power off for the next scene
-                        networkedController.NetworkTurnIBXOff();
-                        //Debug.Log("TURNED OFF IBX POWER");
-                    }
                 }
             }
         }

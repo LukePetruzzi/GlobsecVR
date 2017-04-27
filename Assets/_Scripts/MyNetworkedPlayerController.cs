@@ -195,6 +195,26 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
                 coll.enabled = false;
             }
         }
+        else // teleporting into the ibx scene
+        {
+            // turn on the ibx meshes 
+            if (GameObject.Find("IBX") != null)
+            {
+                // turn on the meshes
+                foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
+                {
+                    rend.enabled = true;
+                }
+                foreach (Collider coll in GameObject.Find("IBX").GetComponentsInChildren<Collider>())
+                {
+                    coll.enabled = true;
+                }
+
+                // turn the power off for the next scene
+                NetworkTurnIBXOff();
+                //Debug.Log("TURNED OFF IBX POWER");
+            }
+        }
 
         if (isServer)
         {
@@ -211,6 +231,38 @@ public class MyNetworkedPlayerController : NetworkBehaviour {
     [Command]
     private void CmdInvokeSceneChange(string sceneName)
     {
+        if (sceneName != "IBXScene" && GameObject.Find("IBX") != null)
+        {
+            // turn off the meshes
+            foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
+            {
+                rend.enabled = false;
+            }
+            foreach (Collider coll in GameObject.Find("IBX").GetComponentsInChildren<Collider>())
+            {
+                coll.enabled = false;
+            }
+        }
+        else // teleporting into the ibx scene
+        {
+            // turn on the ibx meshes 
+            if (GameObject.Find("IBX") != null)
+            {
+                // turn on the meshes
+                foreach (Renderer rend in GameObject.Find("IBX").GetComponentsInChildren<Renderer>())
+                {
+                    rend.enabled = true;
+                }
+                foreach (Collider coll in GameObject.Find("IBX").GetComponentsInChildren<Collider>())
+                {
+                    coll.enabled = true;
+                }
+
+                // turn the power off for the next scene
+                NetworkTurnIBXOff();
+            }
+        }
+
         SceneManager.LoadScene(sceneName);
         GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(sceneName);
     }
