@@ -1,0 +1,56 @@
+﻿#OBJECT INFORMATION
+#------------------
+#OBJECT NAME
+#DENSITY [g/cm^3]
+#EFFECTIVE BUILDUP FACTOR : if all 1.0’s then calculation neglects this effect; values taken from nucleonica website
+#LINEAR ATTENUATION COEFFICIENT, mu/rho [cm^2/g], taken from NIST website tables (using linear interpolation when necessary)
+# Lines beginning with the character “#” will be ignored by the script.
+# Lines beginning with the character “@” will use the first word as dictionary keys.
+# Lines beginning with the character “$” will use the first word in the line as dictionary sub-keys.
+#------------------
+#OBJECT NAME
+@ Lead
+$ density [g/cm^3]
+11.36
+$ buildup factor
+1.0 1.0 1.0
+$ attenuation coefficient, mu/rho [cm^2/g]
+3.032e+01 2.419e+00 4.031e-01
+#------------------
+#OBJECT NAME
+@ Concrete
+$ density [g/cm^3]
+2.3
+$ buildup factor
+1.0 1.0 1.0
+$ attenuation coefficient, mu/rho [cm^2/g]
+9.601e-01 2.014e-01 1.097e-01
+#------------------
+#OBJECT NAME
+@ Water
+$ density [g/cm^3]
+1.0
+$ buildup factor
+1.0 1.0 1.0
+$ attenuation coefficient, mu/rho [cm^2/g]
+3.756e-01 1.837e-01 1.186e-01
+#------------------
+#OBJECT NAME
+@ Wall_1
+# solid lead wall
+$ density [g/cm^3]
+11.36
+$ buildup factor
+1.0 1.0 1.0
+$ attenuation coefficient, mu/rho [cm^2/g]
+3.032e+01 2.419e+00 4.031e-01
+#------------------
+#OBJECT NAME
+@ Container_1
+# steel (~iron) barrel with no foam lining
+$ density [g/cm^3]
+7.9
+$ buildup factor
+1.0 1.0 1.0
+$ attenuation coefficient, mu/rho [cm^2/g]
+8.176e+00 5.952e-01 1.099e-01
